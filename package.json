@@ -22,16 +22,20 @@
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "source-map-support": "^0.5.12",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "@types/amqplib": "^0.5.14"
   },
   "dependencies": {
     "amqplib": "^0.6.0",
+    "dotenv": "^8.2.0",
     "ts-node": "^8.3.0"
   },
   "scripts": {
     "build": "tsc",
     "test": "mocha --opts ./test/mocha.opts",
     "hello": "node_modules/.bin/ts-node src/hello.ts",
+    "direct-send": "npm run build && node dist/Publishers/DirectQueuePublisher.js",
+    "direct-consume": "npm run build && node dist/Consumers/DirectQueueConsumer.js",
     "coverage": "nyc mocha",
     "format": "prettier --config ./.prettierrc.js --write \"{src, test}/**/*.ts\"",
     "eslint": "eslint --cache --color \"{src, test}/**/*.ts\""
