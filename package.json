@@ -1,0 +1,62 @@
+{
+  "name": "async-amqp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Juan Manuel Montoya Cruz",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.0.0",
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "babel-eslint": "10.x",
+    "chai": "^4.2.0",
+    "eslint": "6.x",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "prettier": "^1.19.1",
+    "source-map-support": "^0.5.12",
+    "typescript": "~3.7.2"
+  },
+  "dependencies": {
+    "amqplib": "^0.6.0",
+    "ts-node": "^8.3.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --opts ./test/mocha.opts",
+    "hello": "node_modules/.bin/ts-node src/hello.ts",
+    "coverage": "nyc mocha",
+    "format": "prettier --config ./.prettierrc.js --write \"{src, test}/**/*.ts\"",
+    "eslint": "eslint --cache --color \"{src, test}/**/*.ts\""
+  },
+  "nyc": {
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80,
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "all": true
+  }
+}
