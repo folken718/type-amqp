@@ -1,8 +1,13 @@
 import * as connProvider from '../Connection/AmqpConnProvider';
 import { v4 as uuidv4 } from 'uuid';
-import { processMessage } from '../MessageProcessors/SimpleMessageProcessor';
+import { Channel, Message } from 'amqplib';
 
 const consumerId = `Consumer-${uuidv4()}`;
+
+const processMessage = (consumerId: string, msg: Message, channel: Channel) => {
+  console.log(`${consumerId} - ${msg.content.toString()}`);
+  channel.ack(msg);
+}
 
 const consumeMsg = async (queue: string) => {
   try {

@@ -1,7 +1,7 @@
 import { Channel, Message } from 'amqplib';
 import { IMessageProcessor } from '../Interfaces/IMessageProcessor';
 
-export class SimpleMessageProcessor implements IMessageProcessor {
+export class ConsoleOutputMessageProcessor implements IMessageProcessor {
   consumerId: string;
   channel: Channel;
 
