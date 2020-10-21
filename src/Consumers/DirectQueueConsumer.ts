@@ -1,28 +1,26 @@
-import * as conn from '../Connections/Connection';
-import dotenv from "dotenv";
-import { Message } from 'amqplib';
+import * as connProvider from '../Connection/AmqpConnProvider';
+import { v4 as uuidv4 } from 'uuid';
+import { processMessage } from '../MessageProcessors/SimpleMessageProcessor';
 
-dotenv.config();
+const consumerId = `Consumer-${uuidv4()}`;
 
-const queue = process.env.QUEUE || "ExampleQueue";
-
-function printMessage(msg: string): void {
-    console.log(msg);
-}
-
-export async function ConsumeMessages(): Promise<void> {
-    try {
-        await conn.InitConnection();
-        await conn.channel.assertQueue(queue, { durable: false });
-        await conn.channel.consume(queue, (msg) => {
-            printMessage(msg?.content.toString() || "");
-            conn.channel.ack(msg as Message);
-        });
-    } catch (error) {
-        console.error(error);
-    }
-}
+const consumeMsg = async (queue: string) => {
+  try {
+    await connProvider.setupAndStartConnection();
+    await connProvider.channel.assertQueue(queue, { durable: false });
+    await connProvider.channel.prefetch(1);
+    await connProvider.channel.consume(
+      queue,
+      (msg) => {
+        if (msg) processMessage(consumerId, msg, connProvider.channel);
+      },
+      { noAck: false },
+    );
+  } catch (error) {
+    console.error('Error: ', error);
+  }
+};
 
 (async () => {
-    ConsumeMessages();
+  await consumeMsg(connProvider.queue);
 })();
