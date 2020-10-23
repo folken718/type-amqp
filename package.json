@@ -39,7 +39,7 @@
     "direct-send": "npm run build && node dist/Publishers/DirectQueuePublisher.js",
     "direct-consume": "npm run build && node dist/Consumers/DirectQueueConsumer.js",
     "exchange-publisher": "npm run build && node dist/Senders/ExchangePublisher.js",
-    "exchange-consumer": "npm run build && node dist/Consumers/ExchangeConsumer.js",
+    "exchange-consumer": "npm run build && node dist/ExampleExchangeConsumer.js",
     "coverage": "nyc mocha",
     "format": "prettier --config ./.prettierrc.js --write \"{src, test}/**/*.ts\"",
     "eslint": "eslint --cache --color \"{src, test}/**/*.ts\""

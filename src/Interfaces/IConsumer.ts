@@ -1,11 +1,9 @@
 import amqp, { Message } from 'amqplib';
-import { Configurations } from './IConfigurations';
+import { IConfigurations } from './IConfigurations';
 import { IMessageProcessor } from './IMessageProcessor';
 
 export interface IConsumer {
-  consumeMessage(msg: Message): void;
-  getConnection(): Promise<amqp.Connection>;
-  getMessageProcessor(channel: amqp.Channel): IMessageProcessor;
-  getConfigurations(): Configurations;
+  consumeMessages(): Promise<void>;
+  createConnection(): Promise<amqp.Connection>;
   init(): Promise<amqp.Channel>;
 }
