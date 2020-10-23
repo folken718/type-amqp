@@ -1,10 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IConsumer } from '../Interfaces/IConsumer';
-import amqp, { Channel } from 'amqplib';
+import amqp from 'amqplib';
 import { IMessageProcessor } from '../Interfaces/IMessageProcessor';
-import { IConfigurations } from '../Interfaces/IConfigurations';
-import { MessageProcessorFactory } from '../Factories/MessageProcessorFactory';
-import { MessageProcessorType } from '../Enums/MessageProcessorsType';
 import { IConfigurationProvider } from '../Interfaces/IConfigurationProvider';
 import { EnvConfigurationsProvider } from '../ConfigurationProviders/EnvConfigurationProvider';
 import { ConsoleOutputMessageProcessor } from '../MessageProcessors/ConsoleOutputMessageProcessor';

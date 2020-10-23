@@ -1,7 +1,7 @@
 {
   "name": "async-amqp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Async typescript based amqp client",
   "main": "index.js",
   "author": "Juan Manuel Montoya Cruz",
   "license": "MIT",
