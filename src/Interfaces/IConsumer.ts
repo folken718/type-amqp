@@ -1,6 +1,4 @@
-import amqp, { Message } from 'amqplib';
-import { IConfigurations } from './IConfigurations';
-import { IMessageProcessor } from './IMessageProcessor';
+import amqp from 'amqplib';
 
 export interface IConsumer {
   consumeMessages(): Promise<void>;
