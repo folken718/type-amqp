@@ -1,8 +1,8 @@
 import { ExchangeConsumer } from "./Consumers/ExchangeConsumer";
-import { GenericWorker } from "./Workers/GenericWorker";
+import { GenericConsumerWorker } from "./Workers/GenericConsumerWorker";
 
 (async () => {
   const consumer = new ExchangeConsumer();
-  const worker = new GenericWorker(consumer);
+  const worker = new GenericConsumerWorker(consumer);
   worker.start();
 })();

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IConsumer } from '../Interfaces/IConsumer';
-import amqp from 'amqplib';
+import amqp, { Channel, Connection } from 'amqplib';
 import { IMessageProcessor } from '../Interfaces/IMessageProcessor';
 import { IConfigurationProvider } from '../Interfaces/IConfigurationProvider';
 import { EnvConfigurationsProvider } from '../ConfigurationProviders/EnvConfigurationProvider';
@@ -22,21 +22,25 @@ export class ExchangeConsumer implements IConsumer {
     this.configurations = configurations;
     this.consumerId = consumerId;
   }
+  getConsumerId(): string {
+    return this.consumerId;
+  }
 
   async createConnection(): Promise<amqp.Connection> {
     return amqp.connect(this.configurations.getAmqpURL());
   }
 
-  async init() {
-    const conn = await this.createConnection();
-    const channel = await conn.createChannel();
-    return channel;
+  async init(): Promise<{ connection: Connection, channel: Channel }> {
+    const connection = await this.createConnection();
+    const channel = await connection.createChannel();
+    return { connection, channel };
   }
 
   async consumeMessages(): Promise<void> {
     const { queue, exchange, routeKey } = this.configurations.getConfigurations();
-    const channel = await this.init();
+
     try {
+      const { connection, channel } = await this.init();
       await channel.assertExchange(
         exchange,
         'direct',
@@ -51,7 +55,7 @@ export class ExchangeConsumer implements IConsumer {
         }, { noAck: false }
       )
     } catch (error) {
-      console.error('Error: ', error);
+      console.error(`Error on ${this.consumerId} : `, error);
     }
   }
 }

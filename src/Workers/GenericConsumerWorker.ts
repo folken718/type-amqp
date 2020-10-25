@@ -1,7 +1,7 @@
 import { IConsumer } from "../Interfaces/IConsumer";
-import { IWorker } from "../Interfaces/IWorker";
+import { IConsumerWorker } from "../Interfaces/IConsumerWorker";
 
-export class GenericWorker implements IWorker {
+export class GenericConsumerWorker implements IConsumerWorker {
   consumer: IConsumer;
 
   constructor(consumer: IConsumer) {
@@ -9,7 +9,7 @@ export class GenericWorker implements IWorker {
   }
 
   start(): Promise<void> {
-    console.log('Starting consumer worker...');
+    console.log(`'Starting ${this.consumer.getConsumerId()} consumer worker...'`);
     return this.consumer.consumeMessages();
   }
 

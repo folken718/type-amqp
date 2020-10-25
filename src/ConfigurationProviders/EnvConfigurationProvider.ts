@@ -3,7 +3,11 @@ import { IConfigurationProvider } from '../Interfaces/IConfigurationProvider';
 import { IConfigurations } from '../Interfaces/IConfigurations';
 dotenv.config();
 
-const amqpServer = `amqp://${process.env.AMQP_HOST}:${process.env.AMQP_PORT}` || 'amqp://localhost:5672';
+const usr = process.env.USER;
+const passwd = process.env.PASSWD;
+const amqpServer = usr && passwd
+  ? `amqp://${usr}:${passwd}@${process.env.AMQP_HOST}:${process.env.AMQP_PORT}`
+  : `amqp://${process.env.AMQP_HOST}:${process.env.AMQP_PORT}`
 const queue = process.env.QUEUE || 'ExampleQueue';
 const exchange = process.env.EXCHANGE || 'ExampleExchange';
 const routeKey = process.env.ROUTE_KEY || 'xyz';
