@@ -1,7 +1,7 @@
 import { Channel, Message } from 'amqplib';
-import { IMessageProcessor } from '../Interfaces/IMessageProcessor';
+import { IMessageConsumerProcessor } from '../Interfaces/IMessageConsumerProcessor';
 
-export class ConsoleOutputMessageProcessor implements IMessageProcessor {
+export class ConsoleOutputMessageProcessor implements IMessageConsumerProcessor {
   consumerId: string;
 
   constructor(consumerId: string) {
@@ -10,7 +10,7 @@ export class ConsoleOutputMessageProcessor implements IMessageProcessor {
 
   processMessage(channel: Channel, msg: Message): void {
     console.log(`***** ${this.consumerId} *****`);
-    console.log(msg?.content.toString());
+    console.log(JSON.parse(msg?.content.toString()));
     console.log(`***** ----- *****`);
     channel.ack(msg);
   }

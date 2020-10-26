@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IConsumer } from '../Interfaces/IConsumer';
 import amqp, { Channel, Connection } from 'amqplib';
-import { IMessageProcessor } from '../Interfaces/IMessageProcessor';
+import { IMessageConsumerProcessor } from '../Interfaces/IMessageConsumerProcessor';
 import { IConfigurationProvider } from '../Interfaces/IConfigurationProvider';
 import { EnvConfigurationsProvider } from '../ConfigurationProviders/EnvConfigurationProvider';
 import { ConsoleOutputMessageProcessor } from '../MessageProcessors/ConsoleOutputMessageProcessor';
@@ -10,11 +10,11 @@ const preGeneratedId = `Consumer-${uuidv4()}`;
 
 export class ExchangeConsumer implements IConsumer {
   consumerId: string;
-  messageProcessor: IMessageProcessor;
+  messageProcessor: IMessageConsumerProcessor;
   configurations: IConfigurationProvider;
 
   constructor(
-    messageProcessor: IMessageProcessor = new ConsoleOutputMessageProcessor(preGeneratedId),
+    messageProcessor: IMessageConsumerProcessor = new ConsoleOutputMessageProcessor(preGeneratedId),
     configurations: IConfigurationProvider = new EnvConfigurationsProvider(),
     consumerId: string = preGeneratedId
   ) {

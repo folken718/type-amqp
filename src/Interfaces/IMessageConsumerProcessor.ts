@@ -1,5 +1,5 @@
 import { Channel, Message } from 'amqplib';
 
-export interface IMessageProcessor {
+export interface IMessageConsumerProcessor {
   processMessage(channel: Channel, msg: Message): void;
 }
