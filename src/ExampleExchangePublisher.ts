@@ -15,13 +15,20 @@ const randomInt = (min: number, max: number) =>
   const publisher = new ExchangePublisher(
     conn.getConfigurations(),
     preGeneratedId, 
-    conn.getConnection() as Connection, 
     conn.getChannel() as Channel
   );
+  const publisher2 = new ExchangePublisher(
+      conn.getConfigurations(),
+      `Producer2-${uuidv4()}`, 
+      conn.getChannel() as Channel
+  );
+
   const worker = new GenericSenderWorker(publisher);
+  const worker2 = new GenericSenderWorker(publisher2);
   const interval = setInterval(async () => {
     await worker.send(JSON.stringify({ msg: `hello World!! ${uuidv4()}` }));
-  }, randomInt(1000, 3000));
+    await worker2.send(JSON.stringify({ msg: `hello World!! ${uuidv4()}` }));
+  }, randomInt(1000, 2000));
 
   process.on('SIGINT', async () => {
     clearInterval(interval);
