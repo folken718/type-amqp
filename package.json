@@ -24,14 +24,14 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "2.x",
     "eslint-plugin-prettier": "^3.1.4",
-    "mocha": "^6.2.0",
+    "mocha": "^10.4.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "source-map-support": "^0.5.12",
     "typescript": "~3.7.2"
   },
   "dependencies": {
-    "amqplib": "^0.6.0",
+    "amqplib": "^0.10.4",
     "dotenv": "^8.2.0",
     "ts-node": "^8.3.0",
     "uuid": "^8.3.1"

@@ -11,7 +11,7 @@ export class GenericSenderWorker implements ISenderWorker {
   }
 
   send(msg: string | ArrayBuffer): Promise<void> {
-    console.log(`'Starting ${this.sender.getSenderId()} sender worker...'`);
+    console.log(`Sending from ${this.sender.getSenderId()} sender worker --> ${msg}`);
     return this.sender.sendMessage(msg);
   }
 

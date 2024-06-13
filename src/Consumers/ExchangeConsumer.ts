@@ -6,21 +6,20 @@ import { IConfigurationProvider } from '../Interfaces/IConfigurationProvider';
 import { EnvConfigurationsProvider } from '../ConfigurationProviders/EnvConfigurationProvider';
 import { ConsoleOutputMessageProcessor } from '../MessageProcessors/ConsoleOutputMessageProcessor';
 
-const preGeneratedId = `Consumer-${uuidv4()}`;
-
 export class ExchangeConsumer implements IConsumer {
+  preGeneratedId = `Consumer-${uuidv4()}`;
   consumerId: string;
   messageProcessor: IMessageConsumerProcessor;
   configurations: IConfigurationProvider;
 
   constructor(
-    messageProcessor: IMessageConsumerProcessor = new ConsoleOutputMessageProcessor(preGeneratedId),
-    configurations: IConfigurationProvider = new EnvConfigurationsProvider(),
-    consumerId: string = preGeneratedId
+    messageProcessor: IMessageConsumerProcessor,
+    configurations: IConfigurationProvider,
+    consumerId: string
   ) {
-    this.messageProcessor = messageProcessor;
+    this.messageProcessor = messageProcessor
     this.configurations = configurations;
-    this.consumerId = consumerId;
+    this.consumerId = consumerId || this.preGeneratedId;
   }
   getConsumerId(): string {
     return this.consumerId;
