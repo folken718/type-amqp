@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Channel, Connection } from "amqplib";
-import { EnvConfigurationsProvider } from "./ConfigurationProviders/EnvConfigurationProvider";
-import { ConnectionProvider } from "./Connection/ConnectionProvider";
-import { ExchangePublisher } from "./Senders/ExchangePublisher";
-import { GenericSenderWorker } from "./Workers/GenericSenderWorker";
+import { Channel } from 'amqplib';
+import { EnvConfigurationsProvider } from './ConfigurationProviders/EnvConfigurationProvider';
+import { ConnectionProvider } from './Connection/ConnectionProvider';
+import { ExchangePublisher } from './Senders/ExchangePublisher';
+import { GenericSenderWorker } from './Workers/GenericSenderWorker';
 
 const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -14,13 +14,13 @@ const randomInt = (min: number, max: number) =>
   await conn.init();
   const publisher = new ExchangePublisher(
     conn.getConfigurations(),
-    preGeneratedId, 
+    preGeneratedId,
     conn.getChannel() as Channel
   );
   const publisher2 = new ExchangePublisher(
-      conn.getConfigurations(),
-      `Producer2-${uuidv4()}`, 
-      conn.getChannel() as Channel
+    conn.getConfigurations(),
+    `Producer2-${uuidv4()}`,
+    conn.getChannel() as Channel
   );
 
   const worker = new GenericSenderWorker(publisher);
@@ -32,6 +32,8 @@ const randomInt = (min: number, max: number) =>
 
   process.on('SIGINT', async () => {
     clearInterval(interval);
-    setTimeout(async () => {await conn.closeConnection()}, 5000)
+    setTimeout(async () => {
+      await conn.closeConnection();
+    }, 5000);
   });
 })();
